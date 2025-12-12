@@ -53,7 +53,18 @@ $(document).ready(function () {
     }
     //play button code
     $(window).on('load', function () {
-        $("#play-btn").on("click", function () {
+        $("body").on("click", function () {
+            const audio = $('#background-sound')[0];
+            const playIcon = $('.welcome__play').find('#icon-play');
+            const pauseIcon = $('.welcome__play').find('#icon-pause');
+            if (audio.paused) {
+                audio.play();
+                pauseIcon.hide();
+                playIcon.show();
+            }
+        });
+        $("#play-btn").on("click", function (e) {
+            e.stopPropagation();
             const audio = $('#background-sound')[0];
             const playIcon = $('.welcome__play').find('#icon-play');
             const pauseIcon = $('.welcome__play').find('#icon-pause');
@@ -79,7 +90,7 @@ $(document).ready(function () {
         fireBoxImage.addClass('active');
         setTimeout(() => {
             fireBoxImage.hide();
-        }, 1600);
+        }, 1400);
         const allBoxes = $('.welcome__box');
         allBoxes.not(clickedBox).addClass('hidden');
         $('.page__welcome').addClass('no-bg');
@@ -108,9 +119,17 @@ $(document).ready(function () {
         audio.play().catch(() => { });
     }
     $('.welcome__box').on('mouseenter', function () {
-        const audio = document.getElementById('hover-sound');
-        audio.currentTime = 0;
-        audio.play().catch(() => { });
+        const hoverSound = document.getElementById('hover-sound');
+        hoverSound.currentTime = 0;
+        hoverSound.play().catch(() => { });
+        const backgroundSound = $('#background-sound')[0];
+        const playIcon = $('.welcome__play').find('#icon-play');
+        const pauseIcon = $('.welcome__play').find('#icon-pause');
+        if (backgroundSound.paused) {
+            backgroundSound.play();
+            pauseIcon.hide();
+            playIcon.show();
+        }
     });
     // function generateNumber() {
     //     const STORAGE_KEY = "uniqueModalNumber";
